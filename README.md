@@ -27,3 +27,5 @@ Playwright starts the mock server automatically before the tests run and shuts i
 - The assessment's example list for "validation failure" mentions "age out of bounds," but the attendance payload shown has no age field — that belongs to the separate registration payload from a different part of the assessment. This suite validates fields that actually exist on this payload instead.
 - Status enum assumed to be `PRESENT` / `ABSENT` / `EXCUSED`; only `PRESENT` and `ABSENT` appear in the sample payload.
 - Duplicate detection is scoped to one request. Cross-request duplicate detection would need persistent state and is a reasonable next step.
+
+## Sample for actions run
