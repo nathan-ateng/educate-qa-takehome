@@ -1,0 +1,9 @@
+# Part 3: Framework Trade-off Analysis
+
+## Playwright vs. Cypress vs. Selenium — for Educate!'s web and mobile-responsive applications
+
+I'd recommend Playwright. Selenium is the most mature and has the widest browser/language support, but it's also the slowest to write against and the most maintenance-heavy — explicit waits, flaky selectors, and WebDriver protocol overhead per action. For a team of one QA engineer supporting eight-plus developers, that maintenance tax matters more than Selenium's broader legacy-browser coverage, which this stack likely doesn't need.
+
+Between Playwright and Cypress, the deciding factor is what's actually being tested here: multi-channel flows (web dashboard plus offline-capable SMS/USSD) and mobile-responsive rendering. Cypress runs inside the browser itself, which makes it fast for tight feedback loops, but it historically struggles with true multi-tab/multi-origin scenarios and has weaker native mobile-viewport emulation. Playwright runs outside the browser via CDP, supports multiple browser engines (Chromium, Firefox, WebKit) out of the box, has first-class mobile-viewport emulation, and its built-in `APIRequestContext` (used in this repo's Part 2 suite) means one framework covers both UI and API testing instead of needing two tools. For a solo QA engineer building the automation architecture from scratch, consolidating on one tool with lower long-term flake outweighs Cypress's slightly gentler learning curve.
+
+See `.github/workflows/test.yml` for the CI/CD configuration: runs the automated suite on every PR to `main`, blocks merge on any test failure via GitHub branch protection (Settings → Branches → Require status checks to pass, with this workflow selected as required).
